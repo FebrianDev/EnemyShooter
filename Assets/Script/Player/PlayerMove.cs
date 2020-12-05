@@ -1,31 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerMove : MonoBehaviour
 {
-    private Rigidbody2D rigid;
-    void Start()
+    Rigidbody2D rigid;
+    bool isGround = true;
+    private void Start()
     {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        float dirX = CrossPlatformInputManager.GetAxis("Horizontal") * 10f * Time.deltaTime;
+        transform.Translate(Vector3.right * dirX);
+
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * Time.deltaTime * 10f);
+        }
+
+        if (CrossPlatformInputManager.GetButtonDown("Jump") || Input.GetKey(KeyCode.Space) && isGround)
+        {
+            rigid.AddForce(Vector3.up * 500);
+        }
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector2.right * Time.deltaTime * 10f, Space.World);
-        }
+        isGround = true;
+    }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector2.left * Time.deltaTime * 10f, Space.World);
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            transform.Translate(Vector2.up * Time.deltaTime * 10f, Space.World);
-        }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        isGround = false;
     }
 }

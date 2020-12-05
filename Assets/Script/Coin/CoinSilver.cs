@@ -12,7 +12,7 @@ public class CoinSilver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 10);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,7 +25,7 @@ public class CoinSilver : MonoBehaviour
 
         if (collision.gameObject.tag == "AI")
         {
-            slider.value += 1;
+            slider.value += 2;
             Destroy(gameObject);
         }
     }

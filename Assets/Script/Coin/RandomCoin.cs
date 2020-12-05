@@ -1,20 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RandomCoin : MonoBehaviour
 {
     public GameObject[] coin;
-    float time, jeda = 0.5f;
+    float time; 
+    public static float jeda = 2f;
     int random;
     float randXPos;
     float randYPos;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+   
     void Update()
     {
         random = Random.Range(0, 2);

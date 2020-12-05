@@ -9,7 +9,6 @@ public class SpecialBulletMove : MonoBehaviour
     {
         slider = GameObject.FindWithTag("HealthAI").GetComponent<Slider>();
         trans = GameObject.FindWithTag("AI").GetComponent<Transform>();
-        
     }
 
     private void Update()
