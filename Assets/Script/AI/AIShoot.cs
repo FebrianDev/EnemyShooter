@@ -16,10 +16,13 @@ public class AIShoot : MonoBehaviour
     }
     void Update()
     {
+        print(Menu.isPause);
+
         //Dapatkan waktu pada setiap detik
         time += Time.deltaTime;    
         //fungsi untuk pergerakan AI pada sumbu X, AI akan bergerak kemanapun player pergi pada sumbu X
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(trans.transform.position.x, transform.position.y), 0.04f);
+        if(!Menu.isPause)
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(trans.transform.position.x, transform.position.y), 0.04f);
         //Jika time lebih besar dari jeda, maka
         if(time > jeda)
         {

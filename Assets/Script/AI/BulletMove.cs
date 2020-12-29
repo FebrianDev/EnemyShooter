@@ -48,7 +48,7 @@ public class BulletMove : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             //Panggil fungsi random untuk damage Player
-            randDamage = Random.Range(0, 10);
+            randDamage = Random.Range(0, 5);
             //kurangii slider value dg randDamage
             slider.value -= randDamage;
         }

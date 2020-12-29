@@ -1,39 +1,60 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
-
 public class PlayerMove : MonoBehaviour
 {
     Rigidbody2D rigid;
-    bool isGround = true;
+    bool isGround = false;
+    public Joystick joystick;
     private void Start()
     {
+        joystick = GameObject.FindWithTag("Joystick").GetComponent<Joystick>();
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        float dirX = CrossPlatformInputManager.GetAxis("Horizontal") * 10f * Time.deltaTime;
-        transform.Translate(Vector3.right * dirX);
+        //Mobile Version
+        float dirX = joystick.Horizontal;
+        transform.Translate(new Vector2(dirX * 10f * Time.fixedDeltaTime, 0));
 
-        if (Input.GetAxis("Horizontal") != 0)
+        float dirY = joystick.Vertical;
+        if (dirY > 0.5)
         {
-            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * Time.deltaTime * 10f);
+            if (isGround)
+            {
+                rigid.velocity = Vector2.zero;
+                rigid.AddForce(Vector2.up * 400);
+            }
+        }
+        else if (dirY < 0)
+        {
+            if (!isGround)
+            {
+                rigid.velocity = new Vector2(0, -10);
+            }
         }
 
-        if (CrossPlatformInputManager.GetButtonDown("Jump") || Input.GetKey(KeyCode.Space) && isGround)
+        //Desktop Version
+        if (Input.GetAxis("Horizontal") != 0)
         {
-            rigid.AddForce(Vector3.up * 500);
+            transform.Translate(new Vector2(Input.GetAxis("Horizontal") * Time.fixedDeltaTime * 10f, 0));
+        }
+
+        if (Input.GetKey(KeyCode.Space) && isGround)
+        {
+            rigid.AddForce(Vector3.up * 300);
         }
         
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        isGround = true;
+        if(collision.gameObject.tag == "Ground")
+            isGround = true;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGround = false;
+        if (collision.gameObject.tag == "Ground")
+            isGround = false;
     }
 }

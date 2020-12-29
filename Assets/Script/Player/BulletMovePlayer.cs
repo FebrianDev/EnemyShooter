@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 public class BulletMovePlayer : MonoBehaviour
-{
+{   
     public Slider slider;
     Rigidbody2D rigid;
     public Transform trans;
@@ -32,7 +32,7 @@ public class BulletMovePlayer : MonoBehaviour
 
         if (collision.gameObject.tag.Equals("AI"))
         {
-            randDamage = Random.Range(0, 10);
+            randDamage = Random.Range(0, 4);
             slider.value -= randDamage;
         }
     }

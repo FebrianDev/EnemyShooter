@@ -12,6 +12,7 @@ TagManager:
   - Panel
   - Gold
   - Silver
+  - Joystick
   layers:
   - Default
   - TransparentFX

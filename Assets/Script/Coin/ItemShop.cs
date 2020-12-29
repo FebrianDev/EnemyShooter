@@ -43,6 +43,7 @@ public class ItemShop : MonoBehaviour
     }
     public void CloseShop()
     {
+        Menu.isPause = false;
         Time.timeScale = 1f;
         menuShop.SetActive(false);
     }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
-using UnityStandardAssets.CrossPlatformInput;
 public class PlayerShoot : MonoBehaviour
 {
     public GameObject bulletMove, sBullet;
@@ -10,6 +9,7 @@ public class PlayerShoot : MonoBehaviour
     bool healthRegenOn;
     void Start()
     {
+        DataItem.coin = 0;
         healthRegenOn = false;
         slider = GameObject.FindWithTag("HealthPlayer").GetComponent<Slider>();
     }
@@ -26,9 +26,9 @@ public class PlayerShoot : MonoBehaviour
             }
         }
 
-        if(CrossPlatformInputManager.GetButtonDown("Shoot"))
+        if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+          //  Shoot();
         }
 
         if(Input.GetKey(KeyCode.M) && DataItem.health > 0)
@@ -65,5 +65,33 @@ public class PlayerShoot : MonoBehaviour
     public void Shoot()
     {    
         Instantiate(bulletMove, transform.position, Quaternion.identity);   
+    }
+
+    public void HealthBoxUse()
+    {
+        if (DataItem.health > 0)
+        {
+            slider.value += 40;
+            DataItem.health--;
+        }
+    }
+
+    public void HealthRegenUse()
+    {
+        if(DataItem.healthRegen > 0)
+        {
+            StartCoroutine(HealthRegenOn());
+            DataItem.healthRegen--;
+        }
+    }
+
+    public void SpecialBulletUse()
+    {
+      if(DataItem.specialBullet > 0)
+        {
+            Instantiate(sBullet, transform.position, Quaternion.identity);
+            DataItem.specialBullet--;
+        }
+
     }
 }
